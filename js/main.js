@@ -11,22 +11,22 @@ const CREDENTIALS = {
   password: "qwertyqwerty"
 };
 
-const login = (function() {
+const login = (function () {
   let email;
   let password;
 
   function fetchValuesFromForm() {
-    inputEmail.addEventListener("change", function() {
+    inputEmail.addEventListener("change", function () {
       incorrectCredsAlert.style.display = "none";
       email = inputEmail.value;
     });
-    inputPassword.addEventListener("change", function() {
+    inputPassword.addEventListener("change", function () {
       incorrectCredsAlert.style.display = "none";
       password = inputPassword.value;
     });
   }
 
-  loginBtn.addEventListener("click", function(e) {
+  loginBtn.addEventListener("click", function (e) {
     e.preventDefault();
     emptyFieldsCheck();
     checkFields();
@@ -35,17 +35,15 @@ const login = (function() {
   function submitForm() {
     location.assign("./logged-in.html");
   }
-  function emptyFieldsAlert() {
-    incorrectCredsAlert.innerText = "Форма заполнена неверно";
+
+  function setAlert(text) {
+    incorrectCredsAlert.innerText = text;
     incorrectCredsAlert.style.display = "block";
   }
-  function wrongCredsAlert() {
-    incorrectCredsAlert.innerText = "Ваш емейл и/или пароль неверны";
-    incorrectCredsAlert.style.display = "block";
-  }
+
   function emptyFieldsCheck() {
     if (!(email && password)) {
-      emptyFieldsAlert();
+      setAlert("Форма заполнена неверно");
     }
   }
 
@@ -59,19 +57,19 @@ const login = (function() {
         localStorage.getItem("password") == password
       ) {
         submitForm();
-      } else wrongCredsAlert();
+      } else setAlert('Ваш емейл и/или пароль неверны');
     } else {
-      emptyFieldsAlert();
+      setAlert("Форма заполнена неверно");
     }
   }
 
   return {
-    setLogAndPass: function(credentials) {
+    setLogAndPass: function (credentials) {
       localStorage.setItem("email", credentials.email);
       localStorage.setItem("password", credentials.password);
     },
 
-    initComponent: function() {
+    initComponent: function () {
       fetchValuesFromForm();
     }
   };
